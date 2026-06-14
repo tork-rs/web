@@ -1,0 +1,462 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   Tork design tokens — Tailwind v4 theme
+   Material world: iron · rust · brass · patina
+   ───────────────────────────────────────────────────────────── */
+@theme {
+  --color-ink: #0e0c0a;
+  --color-ink2: #131210;
+  --color-ink3: #1a1714;
+  --color-line: #272320;
+  --color-line2: #36302a;
+  --color-bone: #e9e4da;
+  --color-ash: #958e82;
+  --color-faint: #6a645b;
+  --color-rust: #e2562a;
+  --color-rust2: #b8431d;
+  --color-patina: #6fb3a3;
+  --color-brass: #c9a24b;
+
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* ── base ──────────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "ss02";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection {
+    background: rgba(226, 86, 42, 0.3);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-rust);
+    outline-offset: 2px;
+  }
+}
+
+/* ── designed scrollbar (global) ───────────────────────────── */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3a342d transparent;
+}
+/* WebKit / Chromium */
+::-webkit-scrollbar {
+  width: 13px;
+  height: 13px;
+}
+::-webkit-scrollbar-track {
+  background: #0e0c0a;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#3a342d, #2c2823);
+  border: 3px solid #0e0c0a;
+  border-radius: 99px;
+  min-height: 40px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(#e2562a, #b8431d);
+}
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(#f06436, #e2562a);
+}
+::-webkit-scrollbar-corner {
+  background: #0e0c0a;
+}
+
+/* ── thin scrollbars (code blocks, rails) ──────────────────── */
+.thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.thin::-webkit-scrollbar-thumb {
+  background: #2c2823;
+  border-radius: 99px;
+}
+.thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ── syntax tokens (forged from the docs palette) ──────────── */
+.tok-cm { color: #675f55; font-style: italic; }
+.tok-kw { color: #d08a6e; }
+.tok-ty { color: #6fb3a3; }
+.tok-st { color: #c9a24b; }
+.tok-at { color: #e2562a; }
+.tok-fn { color: #e9e4da; }
+.tok-nm { color: #7fb9ab; }
+.tok-pn { color: #9a9286; }
+.ln {
+  color: #3f3a33;
+  user-select: none;
+  padding-right: 1.15rem;
+  display: inline-block;
+  min-width: 2ch;
+  text-align: right;
+}
+
+/* ── terminal output colours ───────────────────────────────── */
+.c-faint { color: #6a645b; }
+.c-ash { color: #958e82; }
+.c-bone { color: #e9e4da; }
+.c-patina { color: #6fb3a3; }
+.c-rust { color: #e2562a; }
+.c-brass { color: #c9a24b; }
+
+/* ── floating navbar — transparent at rest, glass on scroll ── */
+#navbar {
+  max-width: 1300px;
+  height: 58px;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  transition: max-width 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+    height 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+    background-color 0.45s ease, box-shadow 0.45s ease,
+    backdrop-filter 0.45s ease;
+}
+#navbar.nav-shrunk {
+  max-width: 1160px;
+  height: 54px;
+  background: rgba(255, 255, 255, 0.035);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 14px 48px -20px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+@media (prefers-reduced-motion: reduce) {
+  #navbar { transition: none; }
+}
+
+/* ── blueprint grid behind hero / cta ──────────────────────── */
+.grid-bg {
+  background-image: linear-gradient(#ffffff06 1px, transparent 1px),
+    linear-gradient(90deg, #ffffff06 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(110% 90% at 60% 0%, #000 30%, transparent 72%);
+  mask-image: radial-gradient(110% 90% at 60% 0%, #000 30%, transparent 72%);
+}
+
+/* ── terminal ──────────────────────────────────────────────── */
+.term-body { min-height: 1px; }
+.tline { white-space: pre-wrap; word-break: break-word; }
+.prompt { color: #e2562a; }
+.cursor { color: #e2562a; }
+
+/* ── sponsor marquee ───────────────────────────────────────── */
+.marquee-wrap {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee { display: flex; width: max-content; gap: 0; }
+.marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex: 0 0 auto;
+}
+.spon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 215px;
+  flex: 0 0 215px;
+  padding: 1rem 1.25rem;
+  border-right: 1px solid #272320;
+}
+.spon-name { color: #958e82; }
+.spon svg { color: #7c756a; transition: color 0.25s; }
+.spon:hover svg { color: #e2562a; }
+.spon:hover .spon-name { color: #e9e4da; }
+
+/* ── floating-vue: glassmorphism version picker ───────────────
+   The popper is teleported to <body>, so these must be global (not
+   scoped). Target the floating-vue inner content for the glass panel. */
+.v-popper__popper.version-popper .v-popper__inner,
+.v-popper__popper.page-actions-popper .v-popper__inner {
+  min-width: 11.88rem;
+  padding: 0.3rem;
+  color: #e9e4da;
+  background: rgba(20, 18, 16, 0.55);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 0;
+}
+.v-popper__popper.page-actions-popper .v-popper__inner {
+  min-width: 13rem;
+}
+/* arrow simulated border / fill to match the glass */
+.v-popper__popper.version-popper .v-popper__arrow-outer,
+.v-popper__popper.page-actions-popper .v-popper__arrow-outer {
+  border-color: rgba(255, 255, 255, 0.09);
+}
+.v-popper__popper.version-popper .v-popper__arrow-inner,
+.v-popper__popper.page-actions-popper .v-popper__arrow-inner {
+  border-color: rgba(20, 18, 16, 1);
+}
+
+/* ── docs sidebar accordion ────────────────────────────────── */
+.navgroup > summary {
+  cursor: pointer;
+  list-style: none;
+}
+.navgroup > summary::-webkit-details-marker {
+  display: none;
+}
+.navgroup .chev {
+  transition: transform 0.22s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.navgroup[open] .chev {
+  transform: rotate(90deg);
+}
+/* active group stays legible even when collapsed */
+.navgroup[data-active] > summary .grouplabel {
+  color: #e9e4da;
+}
+.navgroup[data-active] > summary .chev {
+  color: #e2562a;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .navgroup[open] .navlist {
+    animation: drop 0.24s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  @keyframes drop {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+/* ── on-this-page TOC ──────────────────────────────────────── */
+.toc-link[data-active='true'] {
+  color: #e9e4da;
+}
+.toc-link[data-active='true'] .toc-bar {
+  background: #e2562a;
+  width: 14px;
+}
+
+/* ── rendered markdown (docs body) ─────────────────────────── */
+.prose-tork {
+  color: #958e82;
+  font-size: 14px;
+  line-height: 1.75;
+}
+.prose-tork > :first-child {
+  margin-top: 0;
+}
+.prose-tork h1 {
+  color: #e9e4da;
+  font-size: clamp(2rem, 5vw, 2.85rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.25rem;
+  scroll-margin-top: 5rem;
+}
+.prose-tork h2 {
+  color: #e9e4da;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 3rem 0 0.85rem;
+  padding-top: 2.25rem;
+  border-top: 1px solid #272320;
+  scroll-margin-top: 5rem;
+}
+.prose-tork h3 {
+  color: #e9e4da;
+  font-size: 15.5px;
+  font-weight: 600;
+  margin: 2rem 0 0.6rem;
+  scroll-margin-top: 5rem;
+}
+.prose-tork h4 {
+  color: #c9c2b6;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-family: var(--font-mono);
+  margin: 1.6rem 0 0.5rem;
+}
+.prose-tork p {
+  margin: 0 0 1rem;
+  max-width: 42rem;
+}
+.prose-tork a {
+  color: #e9e4da;
+  text-decoration: none;
+  border-bottom: 0;
+  transition: color 0.2s;
+}
+.prose-tork a:hover {
+  color: #e2562a;
+}
+.prose-tork strong {
+  color: #e9e4da;
+  font-weight: 600;
+}
+.prose-tork em {
+  color: #c9c2b6;
+}
+.prose-tork ul,
+.prose-tork ol {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+  max-width: 42rem;
+}
+.prose-tork ul {
+  list-style: none;
+  padding-left: 0;
+}
+.prose-tork ul > li {
+  position: relative;
+  padding-left: 1.25rem;
+  margin: 0.4rem 0;
+}
+.prose-tork ul > li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: #6fb3a3;
+}
+.prose-tork ol {
+  list-style: decimal;
+}
+.prose-tork ol > li {
+  margin: 0.4rem 0;
+  padding-left: 0.35rem;
+}
+.prose-tork ol > li::marker {
+  color: #6a645b;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+/* inline code */
+.prose-tork :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  color: #e9e4da;
+  background: #1a1714;
+  border: 1px solid #272320;
+  border-radius: 0;
+  padding: 0.1em 0.4em;
+}
+/* fenced code blocks (Shiki) */
+.prose-tork pre {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.7;
+  background: #131210 !important;
+  border: 1px solid #272320;
+  border-radius: 0;
+  padding: 1rem 1.1rem;
+  margin: 0 0 1.25rem;
+  overflow-x: auto;
+}
+.prose-tork pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+/* blockquote rendered as a greenish dashed alert (no left indicator) */
+.prose-tork blockquote {
+  margin: 0 0 1.25rem;
+  padding: 0.85rem 1.05rem;
+  border: 1px dashed rgba(111, 179, 163, 0.42);
+  border-radius: 0;
+  background: rgba(38, 74, 64, 0.28);
+  color: #a9c8bc;
+  font-size: 13.5px;
+}
+.prose-tork blockquote p {
+  margin: 0;
+}
+.prose-tork blockquote strong {
+  color: #e6fff6;
+}
+.prose-tork blockquote a {
+  color: #8fd9c4;
+}
+.prose-tork blockquote :not(pre) > code {
+  color: #e6fff6;
+  background: rgba(111, 179, 163, 0.14);
+  border-color: rgba(111, 179, 163, 0.3);
+}
+.prose-tork hr {
+  border: 0;
+  border-top: 1px solid #272320;
+  margin: 2.5rem 0;
+}
+.prose-tork table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  margin: 0 0 1.25rem;
+}
+.prose-tork th {
+  text-align: left;
+  color: #e9e4da;
+  font-weight: 600;
+  border-bottom: 1px solid #36302a;
+  padding: 0.5rem 0.75rem;
+}
+.prose-tork td {
+  color: #958e82;
+  border-bottom: 1px solid #272320;
+  padding: 0.5rem 0.75rem;
+}
+.prose-tork img {
+  max-width: 100%;
+  border-radius: 0;
+  border: 1px solid #272320;
+}
+
+/* ── motion ────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  }
+  @keyframes rise {
+    to { opacity: 1; transform: none; }
+  }
+  .blink { animation: blink 1.1s steps(1) infinite; }
+  .cursor { animation: blink 1.1s steps(1) infinite; }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+  .marquee { animation: scroll 42s linear infinite; }
+  .marquee-wrap:hover .marquee { animation-play-state: paused; }
+  @keyframes scroll {
+    to { transform: translateX(-50%); }
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+}
