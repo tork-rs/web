@@ -6,15 +6,25 @@ const route = useRoute()
 
 const copied = ref(false)
 const pageUrl = computed(() => `https://torkframework.dev${route.path}`)
+// The raw Markdown source of this page, served by the docs-markdown middleware.
+const markdownUrl = computed(() => `${route.path}.md`)
 
-function buildMarkdown(): string {
+// Prefer the real Markdown source; fall back to reconstructing it from the
+// rendered article if the request fails (e.g. offline).
+async function buildMarkdown(): Promise<string> {
+  try {
+    const res = await fetch(markdownUrl.value)
+    if (res.ok) return await res.text()
+  } catch {
+    /* fall through to the DOM reconstruction below */
+  }
   const el = document.getElementById('main-doc')
   return el ? articleToMarkdown(el) : ''
 }
 
 async function copyPage() {
   try {
-    await navigator.clipboard.writeText(buildMarkdown())
+    await navigator.clipboard.writeText(await buildMarkdown())
     copied.value = true
     setTimeout(() => (copied.value = false), 1500)
   } catch {
@@ -23,10 +33,7 @@ async function copyPage() {
 }
 
 function viewAsMarkdown() {
-  const blob = new Blob([buildMarkdown()], { type: 'text/markdown;charset=utf-8' })
-  const url = URL.createObjectURL(blob)
-  window.open(url, '_blank', 'noopener')
-  setTimeout(() => URL.revokeObjectURL(url), 30_000)
+  window.open(markdownUrl.value, '_blank', 'noopener')
 }
 
 function openInAI(target: 'claude' | 'chatgpt') {
