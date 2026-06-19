@@ -10,6 +10,21 @@ export default defineNuxtConfig({
   ssr: true,
   plugins: ['~/plugins/floating.ts'],
 
+  // Canonical origin, used by the OG image module and the SEO meta.
+  site: {
+    url: 'https://tork.rs',
+    name: 'Tork',
+  },
+
+  // The sitemap and the llms.txt / llms-full.txt GEO artifacts are server
+  // routes generated from the docs content; prerender them so they ship as
+  // static files and never drift from the docs.
+  nitro: {
+    prerender: {
+      routes: ['/sitemap.xml', '/llms.txt', '/docs/llms-full.txt'],
+    },
+  },
+
   app: {
     head: {
       htmlAttrs: { lang: 'en' },
