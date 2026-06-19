@@ -4,7 +4,8 @@
 // during the build when the content files are on disk. It is the single source
 // of truth for those three artifacts, so they never drift from the docs.
 
-import { promises as fs } from 'node:fs'
+import { execFileSync } from 'node:child_process'
+import { promises as fs, statSync } from 'node:fs'
 import { join, relative } from 'node:path'
 
 /** The canonical site origin, used to build absolute URLs. */
@@ -25,6 +26,27 @@ export interface DocEntry {
   description: string
   /** Markdown body with the frontmatter block removed. */
   body: string
+  /** ISO timestamp of the last change (git commit date, else file mtime). */
+  lastModified: string
+}
+
+/** The last-modified time of a doc: its git commit date, or the file mtime. */
+function lastModifiedOf(file: string): string {
+  try {
+    const iso = execFileSync('git', ['log', '-1', '--format=%cI', '--', file], {
+      cwd: process.cwd(),
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim()
+    if (iso) return new Date(iso).toISOString()
+  } catch {
+    // git is unavailable or the file is untracked; fall back to the mtime.
+  }
+  try {
+    return statSync(file).mtime.toISOString()
+  } catch {
+    return new Date().toISOString()
+  }
 }
 
 /** Strips a leading ordering prefix (`3.techniques` -> `techniques`). */
@@ -105,6 +127,7 @@ export async function collectDocs(): Promise<DocEntry[]> {
       url: `${SITE_URL}${path}`,
       section: slug[0] ?? '',
       group: slug[1] ?? '',
+      lastModified: lastModifiedOf(file),
       ...parsed,
     })
   }

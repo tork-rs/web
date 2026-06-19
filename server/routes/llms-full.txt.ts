@@ -1,22 +1,27 @@
 // `/llms-full.txt` — the full text of every documentation page as one Markdown
 // file, for AI / generative engines. Sits next to `/llms.txt`. Generated from
 // the docs content, prerendered.
+//
+// Each page is preceded by a metadata block (title, description, last_updated,
+// source) fenced by an 80-character rule, the same shape Vercel uses.
+
+const RULE = '-'.repeat(80)
 
 export default defineEventHandler(async (event) => {
   const docs = await collectDocs()
 
-  const parts: string[] = [
-    '# Tork documentation',
-    '',
-    '> The complete text of https://torkframework.dev/docs. Each page below is preceded ' +
-      'by its source URL.',
-    '',
-  ]
-
-  for (const doc of docs) {
-    parts.push(`<!-- Source: ${doc.url} -->`, '', doc.body, '')
-  }
+  const blocks = docs.map((doc) => {
+    const front = [
+      RULE,
+      `title: ${JSON.stringify(doc.title)}`,
+      `description: ${JSON.stringify(doc.description)}`,
+      `last_updated: ${JSON.stringify(doc.lastModified)}`,
+      `source: ${JSON.stringify(doc.url)}`,
+      RULE,
+    ].join('\n')
+    return `${front}\n\n${doc.body}`
+  })
 
   setHeader(event, 'content-type', 'text/plain; charset=utf-8')
-  return parts.join('\n')
+  return `${blocks.join('\n\n\n')}\n`
 })
