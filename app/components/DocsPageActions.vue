@@ -5,7 +5,7 @@ const props = defineProps<{ title?: string }>()
 const route = useRoute()
 
 const copied = ref(false)
-const pageUrl = computed(() => `https://tork.rs${route.path}`)
+const pageUrl = computed(() => `https://torkframework.dev${route.path}`)
 
 function buildMarkdown(): string {
   const el = document.getElementById('main-doc')

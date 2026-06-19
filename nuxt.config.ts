@@ -12,7 +12,7 @@ export default defineNuxtConfig({
 
   // Canonical origin, used by the OG image module and the SEO meta.
   site: {
-    url: 'https://tork.rs',
+    url: 'https://torkframework.dev',
     name: 'Tork',
   },
 
@@ -54,7 +54,10 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/icon',
     '@nuxt/content',
-    '@atoms-studio/nuxt-swiftsearch'
+    '@atoms-studio/nuxt-swiftsearch',
+    // Generates a 1200x630 social banner per page from the Tork OG template,
+    // so the home page and every doc get a real Open Graph / Twitter card.
+    'nuxt-og-image',
   ],
 
   // Syntax highlighting for markdown code fences — a dark theme that sits in

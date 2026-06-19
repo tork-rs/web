@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   const parts: string[] = [
     '# Tork documentation',
     '',
-    '> The complete text of https://tork.rs/docs. Each page below is preceded ' +
+    '> The complete text of https://torkframework.dev/docs. Each page below is preceded ' +
       'by its source URL.',
     '',
   ]

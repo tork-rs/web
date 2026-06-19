@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
       'Routes, queries, and migrations are checked the moment you compile. ' +
       'Install the CLI with `cargo install tork-cli`.',
     '',
-    'The full text of every page is at https://tork.rs/docs/llms-full.txt.',
+    'The full text of every page is at https://torkframework.dev/docs/llms-full.txt.',
     '',
   ]
 

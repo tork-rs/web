@@ -27,7 +27,7 @@ const prev = computed(() => surround.value?.[0] ?? null)
 const next = computed(() => surround.value?.[1] ?? null)
 
 // ── SEO ──
-const site = 'https://tork.rs'
+const site = 'https://torkframework.dev'
 useSeoMeta({
   title: () => `${page.value?.title} — Tork docs`,
   description: () => page.value?.description,
@@ -43,6 +43,12 @@ useSeoMeta({
 useHead({
   htmlAttrs: { lang: 'en' },
   link: [{ rel: 'canonical', href: () => `${site}${route.path}` }],
+})
+
+// The social banner for this doc, generated from the Tork OG template.
+defineOgImageComponent('Tork', {
+  title: page.value?.title,
+  description: page.value?.description,
 })
 
 // GEO: TechArticle structured data so engines can cite the doc cleanly.

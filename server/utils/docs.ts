@@ -8,7 +8,7 @@ import { promises as fs } from 'node:fs'
 import { join, relative } from 'node:path'
 
 /** The canonical site origin, used to build absolute URLs. */
-export const SITE_URL = 'https://tork.rs'
+export const SITE_URL = 'https://torkframework.dev'
 
 export interface DocEntry {
   /** Absolute path to the markdown file. */
