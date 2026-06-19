@@ -1,6 +1,6 @@
-// `/docs/llms-full.txt` — the full text of every documentation page as one
-// Markdown file, for AI / generative engines. Generated from the docs content,
-// prerendered.
+// `/llms-full.txt` — the full text of every documentation page as one Markdown
+// file, for AI / generative engines. Sits next to `/llms.txt`. Generated from
+// the docs content, prerendered.
 
 export default defineEventHandler(async (event) => {
   const docs = await collectDocs()

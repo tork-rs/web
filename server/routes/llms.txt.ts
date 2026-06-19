@@ -1,6 +1,6 @@
 // `/llms.txt` — an index of the documentation for AI / generative engines,
 // in the llmstxt.org format (https://llmstxt.org). The full text lives at
-// `/docs/llms-full.txt`. Generated from the docs content, prerendered.
+// `/llms-full.txt`. Generated from the docs content, prerendered.
 
 export default defineEventHandler(async (event) => {
   const docs = await collectDocs()
@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
       'Routes, queries, and migrations are checked the moment you compile. ' +
       'Install the CLI with `cargo install tork-cli`.',
     '',
-    'The full text of every page is at https://torkframework.dev/docs/llms-full.txt.',
+    'The full text of every page is at https://torkframework.dev/llms-full.txt.',
     '',
   ]
 

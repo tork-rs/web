@@ -21,7 +21,7 @@ export default defineNuxtConfig({
   // static files and never drift from the docs.
   nitro: {
     prerender: {
-      routes: ['/sitemap.xml', '/llms.txt', '/docs/llms-full.txt'],
+      routes: ['/sitemap.xml', '/llms.txt', '/llms-full.txt'],
     },
   },
 
